@@ -1,0 +1,11 @@
+[Unit]
+Description=RTSP Camera Service
+
+[Service]
+User=pi
+ExecStart=/opt/raspi-rtsp/raspi-rtsp
+Restart=always
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target
