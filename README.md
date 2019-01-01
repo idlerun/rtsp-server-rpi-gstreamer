@@ -7,9 +7,9 @@ date: 2018-12-26
 
 ## Overview
 
-This is a new route using gstreamer to get a working secure RTSP server running on a Raspberry Pi. Uses the `gst-rtsp-server` project with a simple wrapper.
+This is a new route using gstreamer to get a working secure RTSP server running on a Raspberry Pi. Uses the `gst-rtsp-server` library with a simple wrapper server.
 
-The previous attempt using the v4l2-rtsp-server project wasn't reliable or customizable enough (IE no options to do any server-side processing of video).
+The previous attempt using the v4l2-rtsp-server project wasn't reliable (frequent frame drops and connection loss).
 
 
 ## Setup
@@ -63,17 +63,17 @@ Checkout this repo to `/opt/raspi-rtsp`
 
 GStreamer 1.14 build process is encapsulated in a Docker environment.
 
-Run [`build-gst.sh`] to compile the GStreamer binaries into `/opt/gstreamer`
+Run [`build-gst.sh`](build-gst.sh) to compile the GStreamer binaries into `/opt/gstreamer`
 
 
 ## Server App
 
-- Customize `server.c` to configure password and port
-- Build server with `./build.sh`
+- Customize [`server.c`](server.c) to configure password and port
+- Build server with [`build.sh`](build.sh)
 
 ### Service
 
-Add [`rtsp-server.service`] to `/etc/systemd/system/rtsp-server.service`
+Add [`rtsp-server.service`](rtsp-server.service) to `/etc/systemd/system/rtsp-server.service`
 
 Load the SystemD module
 
