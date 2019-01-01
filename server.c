@@ -9,7 +9,16 @@ static char* password = "wjJcr4DO0V5OzIrz20";
 static char* port = (char *) DEFAULT_RTSP_PORT;
 
 static char* command = (char *) "(  \
-        rpicamsrc preview=true bitrate=2000000 keyframe-interval=60 ! \
+        rpicamsrc annotation-mode=frame-number \
+                  roi-x=0.0 roi-w=1.0 \
+                  roi-y=0.0 roi-h=1.0 \
+                  sharpness=100 \
+                  contrast=100 \
+                  brightness=60 \
+                  drc=0 \
+                  preview=false \
+                  bitrate=2000000 \
+                  keyframe-interval=60 ! \
           video/x-h264, framerate=30/1, profile=high, width=1640, height=1232 ! \
           h264parse ! \
           rtph264pay name=pay0 pt=96 \

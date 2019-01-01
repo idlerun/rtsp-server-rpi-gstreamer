@@ -7,7 +7,9 @@ date: 2018-12-26
 
 ## Overview
 
-The previous v4l2-rtsp-server project wasn't reliable or customizable enough (IE no options to do any server-side processing of video). This is a new route using gstreamer to get a working secure RTSP server running on a Raspberry Pi.
+This is a new route using gstreamer to get a working secure RTSP server running on a Raspberry Pi. Uses the `gst-rtsp-server` project with a simple wrapper.
+
+The previous attempt using the v4l2-rtsp-server project wasn't reliable or customizable enough (IE no options to do any server-side processing of video).
 
 
 ## Setup
@@ -41,64 +43,33 @@ gpu_mem=256
 disable_camera_led=1
 ```
 
-
 - Put the sd card into pi and boot
 - SSH to pi
+- Set secure password and setup public key based SSH auth (`~/.ssh/authorized_keys`)
 
+## Requirements
 
-
-## Dependencies
-
-```
-sudo apt update
-
-# gstreamer
-sudo apt install -y gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools libgstreamer1.0-dev libgstreamer1.0-0-dbg libgstreamer-plugins-base1.0-dev gtk-doc-tools
-
-# omx encoder
-sudo apt install -y gstreamer1.0-omx gstreamer1.0-omx-bellagio-config gstreamer1.0-omx-generic gstreamer1.0-omx-generic-config gstreamer1.0-omx-rpi gstreamer1.0-omx-rpi-config
-
-# build deps
-sudo apt-get install -y \
-    wget git libtool autoconf cmake \
-    build-essential pkg-config unzip git-core \
-    gtk-doc-tools libglib2.0-dev
+Install Docker as described here: https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/
 
 ```
-
-## Gstreamer Raspberry Pi Camera Source
-
-```
-git clone https://github.com/thaytan/gst-rpicamsrc.git
-(
-cd gst-rpicamsrc
-./autogen.sh
-make
-sudo make install
-)
+curl -sSL https://get.docker.com | sh
 ```
 
-## RTSP Server Library
 
-Build project gst-rtsp-server
 
-```
-git clone https://github.com/GStreamer/gst-rtsp-server.git
-(
-cd gst-rtsp-server
-git checkout 1.4
-./autogen.sh
-make
-sudo make install
-)
-```
+## GStreamer Build
+
+Checkout this repo to `/opt/raspi-rtsp`
+
+GStreamer 1.14 build process is encapsulated in a Docker environment.
+
+Run [`build-gst.sh`] to compile the GStreamer binaries into `/opt/gstreamer`
 
 
 ## Server App
 
-- Add [`server.c`] to `/opt/raspi-rtsp/`
 - Customize `server.c` to configure password and port
-- Build with `./build.sh`
+- Build server with `./build.sh`
 
 ### Service
 
@@ -125,13 +96,13 @@ Play with ffplay or other client
 
 ```
 ffplay \
-  -vf "drawtext=fontfile=/Library/Fonts/Arial.ttf: text='%{frame_num}': start_number=1: x=(w-tw)/2: y=h-(2*lh): fontcolor=white: fontsize=20: box=1: boxcolor=black: boxborderw=2" \
   -rtsp_transport udp \
   -sync ext \
   -fflags nobuffer \
   -framedrop \
   rtsp://user:wjJcr4DO0V5OzIrz20@192.168.56.18:8554/stream
 ```
+
 
 ## References:
 - https://www.stev.org/post/raspberrypisimplertspserver
