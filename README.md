@@ -63,17 +63,17 @@ Checkout this repo to `/opt/raspi-rtsp`
 
 GStreamer 1.14 build process is encapsulated in a Docker environment.
 
-Run [`build-gst.sh`](build-gst.sh) to compile the GStreamer binaries into `/opt/gstreamer`
+Run [`build-gst.sh`](https://github.com/idlerun/rtsp-server-rpi-gstreamer/blob/master/build-gst.sh) to compile the GStreamer binaries into `/opt/gstreamer`
 
 
 ## Server App
 
-- Customize [`server.c`](server.c) to configure password and port
-- Build server with [`build.sh`](build.sh)
+- Customize [`server.c`](https://github.com/idlerun/rtsp-server-rpi-gstreamer/blob/master/server.c) to configure password and port
+- Build server with [`build.sh`](https://github.com/idlerun/rtsp-server-rpi-gstreamer/blob/master/build.sh)
 
 ### Service
 
-Add [`rtsp-server.service`](rtsp-server.service) to `/etc/systemd/system/rtsp-server.service`
+Add [`rtsp-server.service`](https://github.com/idlerun/rtsp-server-rpi-gstreamer/blob/master/rtsp-server.service) to `/etc/systemd/system/rtsp-server.service`
 
 Load the SystemD module
 
