@@ -1,5 +1,5 @@
 ---
-page: https://idle.run/baby-raspi
+page: https://idle.run/rtsp-server-rpi-gstreamer
 title: "GStreamer RTSP Raspberry Pi Camera"
 tags: raspberry gstreamer pi stream rtsp
 date: 2018-12-26
