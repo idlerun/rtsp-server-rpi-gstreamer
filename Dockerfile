@@ -36,7 +36,7 @@ RUN make install
 
 
 FROM build as dep-x264
-RUN git clone --depth 1 --branch stable https://git.videolan.org/git/x264
+RUN git clone --depth 1 --branch stable https://code.videolan.org/videolan/x264.git
 WORKDIR /src/x264
 RUN ./configure --prefix=$TARGET_DIR --enable-shared --disable-opencl --enable-pic
 RUN make -j4
